@@ -19,7 +19,7 @@ public class TestController {
 	@ResponseBody
 	@GetMapping("/test")
 	public ResponseEntity<JSONResult> getTest() {
-		String testString = testService.getTest();
+		String testString = testService.getTest(); // test01
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("success_test_message", testString));
 	}
 }
