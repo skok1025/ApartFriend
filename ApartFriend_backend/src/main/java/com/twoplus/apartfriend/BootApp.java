@@ -15,11 +15,7 @@ import com.twoplus.apartfriend.libarary.libLog;
 public class BootApp {
 	
 	public static void main(String[] args) {
-		Date today = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-
-		String serverLogData = "[SERVER_START_TIME] : " + dateFormat.format(today) + "\n";
-		libLog.getInstance().write("server.log", serverLogData);
+		libLog.getInstance().write("server.log", "SERVER_START_TIME");
 		SpringApplication.run(BootApp.class,args);
 	}
 
