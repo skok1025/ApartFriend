@@ -50,7 +50,7 @@ public class SampleControllerTest {
 		ResultActions resultActions =
 				mockMvc
 				.perform(
-						get("/test").contentType(MediaType.APPLICATION_JSON));
+						get("/api/test/test").contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
 		.andExpect(status().isOk())
