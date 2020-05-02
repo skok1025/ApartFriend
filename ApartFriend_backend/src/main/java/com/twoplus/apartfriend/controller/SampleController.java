@@ -29,12 +29,17 @@ public class SampleController {
 	
 	@ApiOperation(value = "샘플 backend API 명")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "testvo", value = "test 를 위한 vo", required = true, dataType = "TestVo", defaultValue = "") 
+		@ApiImplicitParam(name = "uservo", value = "test 를 위한 vo", required = true, dataType = "UserVo", defaultValue = "") 
 	})
 	@ResponseBody
 	@GetMapping("/test")
-	public ResponseEntity<JSONResult> getTest(/*@Valid */TestVo testvo) {
-		String testString = testService.getTest(); // test01
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("success_test_message", testString));
+	public ResponseEntity<JSONResult> getTest(/*@Valid */TestVo testvo) throws Exception {
+		throw new ArithmeticException();
 	}
+
+//	public ResponseEntity<JSONResult> getTest(/*@Valid */TestVo testvo) {
+//		String testString = testService.getTest(); // test01
+//		System.out.println("testString/////////// :: " + testString);
+//		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("success_test_message", testString));
+//	}
 }
