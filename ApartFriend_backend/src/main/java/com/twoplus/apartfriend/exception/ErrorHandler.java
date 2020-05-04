@@ -1,4 +1,4 @@
-package com.twoplus.apartfriend.config;
+package com.twoplus.apartfriend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
