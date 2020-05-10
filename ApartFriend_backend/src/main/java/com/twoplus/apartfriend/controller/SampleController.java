@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-//@Controller
+
 @RestController("AdminAPIController")
 @RequestMapping("/api/test")
 public class SampleController {
@@ -31,7 +31,7 @@ public class SampleController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "testvo", value = "test 를 위한 vo", required = true, dataType = "TestVo", defaultValue = "") 
 	})
-	@ResponseBody
+
 	@GetMapping("/test")
 	public ResponseEntity<JSONResult> getTest(/*@Valid */TestVo testvo) {
 		String testString = testService.getTest(); // test01
