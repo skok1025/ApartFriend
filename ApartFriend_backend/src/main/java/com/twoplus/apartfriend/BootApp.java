@@ -15,6 +15,7 @@ import com.twoplus.apartfriend.libarary.libLog;
 public class BootApp {
 	
 	public static void main(String[] args) {
+		// server 시작시간 로깅
 		libLog.getInstance().write("server.log", "SERVER_START_TIME");
 		SpringApplication.run(BootApp.class,args);
 	}
