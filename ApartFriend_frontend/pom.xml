@@ -138,4 +138,21 @@
 		</dependency>
 
 	</dependencies>
+	
+	<build>
+	
+    <plugins>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.1</version>
+                <configuration>
+                    <source>1.8</source><!-- 내가 쓰는 자바 버전 넣기 -->
+                    <target>1.8</target><!-- 내가 쓰는 자바 버전 넣기 -->
+                </configuration>
+        </plugin>
+    </plugins>
+    
+</build>
+
+
 </project>
