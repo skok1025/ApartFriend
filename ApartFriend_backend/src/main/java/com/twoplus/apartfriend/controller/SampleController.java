@@ -31,7 +31,6 @@ public class SampleController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "testvo", value = "test 를 위한 vo", required = true, dataType = "TestVo", defaultValue = "") 
 	})
-
 	@GetMapping("/test")
 	public ResponseEntity<JSONResult> getTest(/*@Valid */TestVo testvo) {
 		String testString = testService.getTest(); 

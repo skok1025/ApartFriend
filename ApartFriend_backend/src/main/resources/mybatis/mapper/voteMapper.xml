@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.twoplus.apartfriend.mapper.VoteMapper">
+	
+	<select id="getVoteList" parameterType="long" resultType="voteVo">
+		<![CDATA[
+		    SELECT 
+		    	no,
+		    	title,
+		    	start_timestamp,
+		    	end_timestamp,
+		    	ins_timestamp,
+		    	upd_timestamp,
+		    	del_timestamp,
+		    	user_id
+		    FROM t_vote
+			ORDER BY no DESC
+			LIMIT 10 OFFSET #{startCol}
+		]]>
+	</select>
+	
+
+</mapper>
