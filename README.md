@@ -1,4 +1,4 @@
-# ApartFriend
+# ApartFriend (위키 - https://github.com/skok1025/ApartFriend/wiki)
 ## version
 - mariaDB : 10.1.38
 - Spring : Spring Boot, Spring Security
