@@ -26,7 +26,7 @@ public class UserController {
 	public String getUserList() throws Exception {
 
 		List<UserVO> userList = userService.getUserList();
-		System.out.println("userLIst tostring ::: " + userList);
+		System.out.println("userLIst tostring :::: " + userList);
 		return "test";
 	}
 
