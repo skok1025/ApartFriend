@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.twoplus.apartfriend.mapper.UserMapper">
+
+	<resultMap id="userSelectMap"                  type="user">
+		<result property="userId"    column="USER_ID"       jdbcType="VARCHAR" />
+		<result property="unitNo"    column="UNIT_NO"       jdbcType="VARCHAR" />
+		<result property="name"      column="NAME"          jdbcType="VARCHAR" />
+		<result property="pwd"       column="PWD"           jdbcType="VARCHAR" />
+		<result property="gender"    column="GENDER"        jdbcType="VARCHAR" />
+		<result property="phoneNum"  column="PHONE_NUM"     jdbcType="INTEGER" />
+		<result property="regDate"   column="REG_DATE"      jdbcType="VARCHAR" />
+		<result property="cEmail"    column="C_EMAIL"       jdbcType="VARCHAR" />
+		<result property="cAddr"     column="C_ADDR"        jdbcType="VARCHAR" />
+		<result property="roll"      column="ROLL"          jdbcType="INTEGER" />
+		<result property="headHouse" column="HEAD_HOUSE"    jdbcType="INTEGER" />
+		<result property="useFlag"   column="USE_FLAG"      jdbcType="VARCHAR" />
+ 		<result property="ssn"       column="SSN"           jdbcType="VARCHAR" /> 
+	</resultMap>
+	
+	<select id="getUserList" resultMap="userSelectMap">
+		<![CDATA[
+			SELECT * 
+			FROM apartfriend.t_user
+		]]>
+	</select>
+	
+<!-- 	<insert id="addUser" parameterType="user"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			INSERT INTO apartfriend.t_user -->
+<!-- 			VALUES() -->
+<!-- 		]]> -->
+<!-- 	</insert> -->
+
+
+</mapper>

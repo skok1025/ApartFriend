@@ -34,7 +34,8 @@ public class SampleController {
 
 	@GetMapping("/test")
 	public ResponseEntity<JSONResult> getTest(/*@Valid */TestVo testvo) {
-		String testString = testService.getTest(); // test01
+		String testString = testService.getTest(); 
+		System.out.println("check ::");
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("success_test_message", testString));
 	}
 }
