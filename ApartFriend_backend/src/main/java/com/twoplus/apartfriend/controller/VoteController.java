@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ import io.swagger.annotations.ApiOperation;
 public class VoteController {
 	@Autowired
 	private VoteService voteService;
+	
+	@Autowired
+	private CacheManager cacheManager;
 	
 	@ApiOperation(value = "투표등록 API")
 	@ApiImplicitParams({

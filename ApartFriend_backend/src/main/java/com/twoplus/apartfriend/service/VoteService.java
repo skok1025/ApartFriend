@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.twoplus.apartfriend.mapper.VoteMapper;
@@ -17,6 +19,7 @@ public class VoteService {
 	@Autowired
 	VoteMapper voteMapper;
 
+	@CacheEvict("voteList") // 캐시 삭제
 	public int addVote(@Valid VoteVO voteVo) {
 		int result = voteMapper.addVote(voteVo);
 		
@@ -30,6 +33,7 @@ public class VoteService {
 		return result;
 	}
 
+	@Cacheable("voteList") // 캐시
 	public List<VoteVO> getVoteList(Long startCol) {
 		List<VoteVO> list = voteMapper.getVoteList(startCol);
 		return list;
