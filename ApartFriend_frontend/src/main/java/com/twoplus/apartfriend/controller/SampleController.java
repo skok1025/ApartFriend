@@ -21,4 +21,8 @@ public class SampleController {
 		return service.getTest();
 	}
 
+	@GetMapping("/template")
+	public String template() {
+		return "template";
+	}
 }
