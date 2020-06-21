@@ -9,10 +9,14 @@ import com.twoplus.apartfriend.vo.VoteValueVO;
 
 public interface VoteMapper {
 
-	int addVote(@Valid VoteVO voteVo);
+	int addVote(VoteVO voteVo);
 
 	int addVoteValue(VoteValueVO voteValueVo);
 
 	List<VoteVO> getVoteList(Long startCol);
+
+	int updateVote(@Valid VoteVO voteVo);
+
+	int deleteVote(VoteVO voteVo);
 
 }
