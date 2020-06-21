@@ -3,6 +3,7 @@ package com.twoplus.apartfriend.vo;
 import java.util.List;
 
 import org.apache.ibatis.type.Alias;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Getter;
@@ -15,6 +16,8 @@ import lombok.ToString;
 @Alias("VoteVO")
 public class VoteVO {
 	private Integer no;
+	@NotEmpty
+	@Length(max = 500)
 	private String title;
 	private String start_timestamp;
 	private String end_timestamp;

@@ -42,6 +42,16 @@ public class VoteService {
 		List<VoteVO> list = voteMapper.getVoteList(startCol);
 		return list;
 	}
+
+	@CacheEvict("voteList")
+	public int updateVote(@Valid VoteVO voteVo) {
+		return voteMapper.updateVote(voteVo);
+	}
+
+	@CacheEvict("voteList")
+	public int deleteVote(VoteVO voteVo) {
+		return voteMapper.deleteVote(voteVo);
+	}
 	
 	
 }

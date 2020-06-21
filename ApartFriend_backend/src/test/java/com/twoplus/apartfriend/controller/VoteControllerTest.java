@@ -1,8 +1,10 @@
 package com.twoplus.apartfriend.controller;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -98,6 +100,57 @@ public class VoteControllerTest {
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.message", is("투표조회 성공")));
 						
+	}
+	
+	/**
+	 * 투표 수정 테스트
+	 * @throws Exception 예외
+	 */
+	@Test
+	public void voteEdit() throws Exception {
+		VoteVO vo = new VoteVO();
+		vo.setNo(25);
+		vo.setTitle("test title (change)");
+		vo.setStart_timestamp("2020-06-21");
+		vo.setEnd_timestamp("2020-06-25");
+		
+		VoteValueVO valueVo1 = new VoteValueVO();
+		valueVo1.setOption("option name");
+		valueVo1.setOption_count(0);
+		
+		List<VoteValueVO> voteValueList = new ArrayList<VoteValueVO>();
+		voteValueList.add(valueVo1);
+		vo.setVotevalueList(voteValueList);
+		
+		ResultActions resultActions = 
+				mockMvc
+				.perform(
+						put("/api/vote/").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				
+		resultActions
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
+	}
+	
+	/**
+	 * 투표 삭제 테스트
+	 * @throws Exception 예외
+	 */
+	@Test
+	public void voteDelete() throws Exception {
+		VoteVO vo = new VoteVO();
+		vo.setNo(26);
+		vo.setDel_timestamp("2020-06-21");
+		vo.setUser_id("skok1025");
+		
+		ResultActions resultActions = 
+				mockMvc
+				.perform(
+						delete("/api/vote/").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				
+		resultActions
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
 	}
 
 }

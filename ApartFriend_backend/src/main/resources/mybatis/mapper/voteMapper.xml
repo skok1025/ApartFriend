@@ -43,6 +43,24 @@
 			LIMIT 10 OFFSET #{startCol}
 		]]>
 	</select>
+	
+	<update id="updateVote" parameterType="voteVo">
+	    <![CDATA[
+	        UPDATE
+	            t_vote
+	            SET title = #{title}, start_timestamp = #{start_timestamp}, end_timestamp = #{end_timestamp} 
+	        WHERE no = #{no}
+	    ]]>
+	</update>
+	
+	<update id="deleteVote" parameterType="voteVo">
+	    <![CDATA[
+	        UPDATE
+	            t_vote
+	            SET del_timestamp = #{del_timestamp}
+	        WHERE no = #{no} AND user_id = #{user_id}
+	    ]]>
+	</update>
 
 
 </mapper>

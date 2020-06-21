@@ -15,4 +15,8 @@ public interface VoteMapper {
 
 	List<VoteVO> getVoteList(Long startCol);
 
+	int updateVote(@Valid VoteVO voteVo);
+
+	int deleteVote(VoteVO voteVo);
+
 }
