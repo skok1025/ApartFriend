@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.twoplus.apartfriend.mapper.VoteMapper;
+import com.twoplus.apartfriend.repository.VoteDao;
 import com.twoplus.apartfriend.vo.VoteVO;
 import com.twoplus.apartfriend.vo.VoteValueVO;
 
@@ -18,14 +19,17 @@ public class VoteService {
 
 	@Autowired
 	VoteMapper voteMapper;
+	
+//	@Autowired
+//	private VoteDao voteDao;
 
 	@CacheEvict("voteList") // 캐시 삭제
-	public int addVote(@Valid VoteVO voteVo) {
+	public int addVote(VoteVO voteVo) {
 		int result = voteMapper.addVote(voteVo);
-		
+		System.out.println("result check ::: " + result );
 		int voteNo = voteVo.getNo();
 		List<VoteValueVO> voteValueList = voteVo.getVotevalueList();
-		
+		System.out.println("voteValueList check :: " + voteValueList);
 		for (VoteValueVO voteValueVo : voteValueList) {
 			voteValueVo.setVote_no(voteNo);
 			result *= voteMapper.addVoteValue(voteValueVo);

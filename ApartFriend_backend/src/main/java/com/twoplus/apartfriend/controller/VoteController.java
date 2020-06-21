@@ -14,7 +14,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.twoplus.apartfriend.dto.JSONResult;
 import com.twoplus.apartfriend.service.SampleService;
 import com.twoplus.apartfriend.service.VoteService;
@@ -39,12 +42,12 @@ public class VoteController {
 		@ApiImplicitParam(name = "voteVo", value = "투표등록을 위한 vo", required = true, dataType = "VoteVo", defaultValue = "") 
 	})
 	@PostMapping("/")
-	public ResponseEntity<JSONResult> addVote(@Valid VoteVO voteVo, BindingResult bindresult) {
-		int result = voteService.addVote(voteVo);
-		
+	public ResponseEntity<JSONResult> addVote(@RequestBody VoteVO voteVo, BindingResult bindresult) {
+		System.out.println("voteVO check ::: " + voteVo);
 		// 유효성 검사 실패시
 		if (bindresult.hasErrors()) {
 			List<FieldError> list = bindresult.getFieldErrors();
+			System.out.println("list check ::: " + list);
 			String errMsg = "";
 			for (FieldError err : list) {
 				errMsg += err.getField() +"-"+err.getDefaultMessage()+"/";
@@ -52,6 +55,8 @@ public class VoteController {
 			errMsg += "오류발생";
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
 		}
+		
+		int result = voteService.addVote(voteVo);
 		
 		return result == 1 ? ResponseEntity.status(HttpStatus.CREATED).body(JSONResult.success("투표등록 성공", result))
 				: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("투표등록 실패"));

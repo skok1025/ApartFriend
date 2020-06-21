@@ -12,10 +12,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Alias("voteVo")
+@Alias("VoteVO")
 public class VoteVO {
 	private Integer no;
-	@NotEmpty
 	private String title;
 	private String start_timestamp;
 	private String end_timestamp;
