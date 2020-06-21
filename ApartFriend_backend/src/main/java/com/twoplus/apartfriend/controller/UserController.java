@@ -33,7 +33,7 @@ public class UserController {
 	String errMsg = "";
 	int result = 0;
 	
-	//모든 유저정보 get
+	//모든 유저정보 geta
 	@ApiOperation(value="모든 유저정보 리스트")
 	@GetMapping("/userList")
 	public ResponseEntity<JSONResult> userList() throws Exception {
