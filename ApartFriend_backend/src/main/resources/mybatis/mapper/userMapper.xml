@@ -24,15 +24,46 @@
 		<![CDATA[
 			SELECT * 
 			FROM apartfriend.t_user
+			WHERE USE_FLAG = 1
 		]]>
 	</select>
 	
-<!-- 	<insert id="addUser" parameterType="user"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			INSERT INTO apartfriend.t_user -->
-<!-- 			VALUES() -->
-<!-- 		]]> -->
-<!-- 	</insert> -->
-
-
+	<insert id="addUser" parameterType="user" >
+		<![CDATA[
+ 			INSERT INTO apartfriend.t_user
+ 			VALUES(
+ 				#{userId},
+ 				#{unitNo},
+ 				#{name},
+ 				#{pwd},
+ 				#{gender},
+ 				#{phoneNum},
+ 				now(),
+ 				#{cEmail},
+ 				#{cAddr},
+ 				#{roll},
+ 				#{headHouse},
+ 				#{useFlag},
+ 				#{ssn}
+ 			) 
+ 		]]> 
+	</insert>
+	
+	<update id="updateUser" parameterType="user">
+	<![CDATA[
+		UPDATE apartfriend.t_user
+		SET    NAME = #{name}
+		WHERE PWD = #{pwd}
+	]]>
+	</update>
+	
+	<update id="deleteUser" parameterType="user">
+	<![CDATA[
+		UPDATE apartfriend.t_user
+		SET    USE_FLAG = 2
+		WHERE USER_ID = #{userId}
+	]]>
+	</update>
+	
+	
 </mapper>

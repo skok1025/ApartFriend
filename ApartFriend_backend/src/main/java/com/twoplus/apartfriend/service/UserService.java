@@ -19,8 +19,19 @@ public class UserService {
 		return userMapper.getUserList();
 	}
 	
-	public void addUser(UserVO userVO) throws Exception {
-		userMapper.addUser(userVO);
+	//회원가입
+	public int addUser(UserVO userVO) throws Exception {
+		return userMapper.addUser(userVO);
+	}
+	
+	//회원수정
+	public int updateUser(UserVO userVO) throws Exception {
+		return userMapper.updateUser(userVO);
+	}
+	
+	//회원삭제
+	public int deleteUser(UserVO userVO) throws Exception {
+		return userMapper.deleteUser(userVO);
 	}
 	
 }
