@@ -9,3 +9,5 @@ https://myhappyman.tistory.com/100?category=873296
 
 ## 웹 소켓 예제 => 아파트 투표등록
 https://bloodfinger.tistory.com/40
+
+## cron => 투표현황을 하루에 10시, 18시에 문자전송 
