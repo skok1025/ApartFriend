@@ -25,4 +25,9 @@ public class SampleController {
 	public String template() {
 		return "template";
 	}
+	
+	@GetMapping("/template1")
+	public String template1() {
+		return "template1";
+	}
 }
