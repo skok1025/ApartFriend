@@ -20,52 +20,7 @@
  		<result property="ssn"       column="C_SSN"           jdbcType="VARCHAR" /> 
 	</resultMap>
 	
-	<select id="getUserList" resultMap="userSelectMap">
-		<![CDATA[
-			SELECT * 
-			FROM apartfriend.t_user
-			WHERE USE_FLAG = 1
-		]]>
-	</select>
-	
-	<insert id="addUser" parameterType="user" >
-		<![CDATA[
- 			INSERT INTO apartfriend.t_user
- 			VALUES(
- 				#{userId},
- 				#{unitNo},
- 				#{name},
- 				#{pwd},
- 				#{gender},
- 				#{phoneNum},
- 				now(),
- 				#{cEmail},
- 				#{cAddr},
- 				#{roll},
- 				#{headHouse},
- 				#{useFlag},
- 				#{ssn}
- 			) 
- 		]]> 
-	</insert>
-	
-	<update id="updateUser" parameterType="user">
-	<![CDATA[
-		UPDATE apartfriend.t_user
-		SET    NAME = #{name}
-		WHERE PWD = #{pwd}
-	]]>
-	</update>
-	
-	<update id="deleteUser" parameterType="user">
-	<![CDATA[
-		UPDATE apartfriend.t_user
-		SET    USE_FLAG = 2
-		WHERE USER_ID = #{userId}
-	]]>
-	</update>
-	
-	<select id="getAuthUser">
+	<select id="selectAuthUser" resultType="com.twoplus.apartfriend.vo.UserVO">
 	<![CDATA[
 	SELECT 
         user_id as userId,
@@ -75,12 +30,12 @@
         cast(AES_DECRYPT(c_phone_num, 'CAFE24') as char(200)) as phoneNum,
         cast(AES_DECRYPT(c_email, 'CAFE24') as char(200)) as email,
         cast(AES_DECRYPT(c_addr, 'CAFE24') as char(200)) as addr,
-        cast(AES_DECRYPT(c_phone_num, 'CAFE24') as char(200)) as phoneNum,
         roll,
         head_house as headHouse,
-        use_flag as useFlag,
-        cast(AES_DECRYPT(c_ssn, 'CAFE24') as char(200)) as ssn
-    FROM t_user;
+        use_flag as useFlag
+        
+    FROM apartfriend.t_user
+    WHERE user_id = 'skok1025';
 	]]>
 	</select>
 	

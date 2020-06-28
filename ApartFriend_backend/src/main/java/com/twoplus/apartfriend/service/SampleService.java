@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.twoplus.apartfriend.repository.SampleDao;
 
-//@Service
+@Service
 public class SampleService {
 
 	@Autowired

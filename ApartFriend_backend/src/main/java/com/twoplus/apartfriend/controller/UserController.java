@@ -1,6 +1,13 @@
 package com.twoplus.apartfriend.controller;
 
-import java.util.List;import org.apache.catalina.User;
+import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +27,10 @@ import io.swagger.annotations.ApiOperation;
 
 
 /**
- * @author pkj
+ * @author shkim
  *
  */
-//@RestController
+@Controller
 @RequestMapping("/api/user")
 public class UserController {
 
@@ -33,66 +40,24 @@ public class UserController {
 	String errMsg = "";
 	int result = 0;
 	
-
-	
-	//모든 유저정보 geta
-	@ApiOperation(value="모든 유저정보 리스트")
-	@GetMapping("/userList")
-	public ResponseEntity<JSONResult> userList() throws Exception {
-
-		List<UserVO> userList = null;
-		 errMsg = "";
-
-		try {
-			userList = userService.getUserList();
-		} catch (Exception e) {
-			errMsg = "오류발생";
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(errMsg));
-		}
+	@ApiOperation(value="로그인")
+	@PostMapping("/auth")
+	public ResponseEntity<JSONResult> getAuth(@RequestBody UserVO userVo) throws Exception {
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("유저리스트정보조회 성공", userList));
-	}
-	@ApiOperation(value="회원가입")
-	//회원가입
-	@PostMapping("/addUser")
-	public ResponseEntity<JSONResult> addUser(@RequestBody UserVO userVO) throws Exception {
+		UserVO authUser = userService.getAuthUser(userVo);
 		
-		try {
-			
-			result = userService.addUser(userVO);
+		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		Set<ConstraintViolation<UserVO>> validatorResults = validator.validateProperty(userVo, "userId");
 
-		} catch (Exception e) {
-			errMsg = "오류발생";
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(errMsg));
+		if (!validatorResults.isEmpty()) {
+			for (ConstraintViolation<UserVO> validatorResult : validatorResults) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(JSONResult.fail(validatorResult.getMessage()));
+			}
 		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("회원가입 성공", result));
-		
-	}
-	@ApiOperation(value="회원정보 수정")
-	//회원정보 수정
-	@PostMapping("/updateUser")
-	public ResponseEntity<JSONResult> updateUser(@RequestBody UserVO userVO) throws Exception {
 
-		try {
-			result = userService.updateUser(userVO);
+		return authUser != null ? ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("로그인 성공", authUser))
+				: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("로그인 실패"));
+	}
 
-		} catch (Exception e) {
-			errMsg = "오류발생";
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(errMsg));
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("회원수정 성공", result));
-	}
-	@ApiOperation(value="회원삭제")
-	//회원삭제
-	@PostMapping("/deleteUser")
-	public ResponseEntity<JSONResult> deleteUser(@RequestBody UserVO userVO) throws Exception {
-		try {
-			result = userService.deleteUser(userVO);
-		} catch (Exception e) {
-			errMsg = "오류발생";
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(errMsg));
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("회원삭제 성공", result));
-	}
 }

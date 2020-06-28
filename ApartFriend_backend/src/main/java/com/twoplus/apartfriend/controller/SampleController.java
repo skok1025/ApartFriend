@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 
 
 
-//@RestController("AdminAPIController")
+//@Controller
 //@RequestMapping("/api/test")
 public class SampleController {
 
