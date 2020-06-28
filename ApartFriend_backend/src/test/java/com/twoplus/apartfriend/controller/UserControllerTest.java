@@ -3,6 +3,7 @@ package com.twoplus.apartfriend.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,93 +43,22 @@ public class UserControllerTest {
 	public void cleanup() {
 	}
 
-	//@Test
-	public void voteList() throws Exception {
-		ResultActions resultActions =
-				mockMvc
-				.perform(
-						get("/userList").contentType(MediaType.APPLICATION_JSON));
-
-		resultActions
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.message", is("유저리스트정보조회 성공")));
-
-	}
-
-	//@Test
-	public void addUser() throws Exception {
-		UserVO userVO =new UserVO();
-
-		userVO.setUserId("test14");
-		userVO.setUnitNo("test12");
-		userVO.setName("test12");
-		userVO.setPwd("test12");
-		userVO.setPhoneNum(123);
-		userVO.setEmail("test12");
-		userVO.setAddr("test12");
-		userVO.setRoll(1);
-		userVO.setHeadHouse(1);
-		userVO.setUseFlag("12");
-		userVO.setSsn("1232");
-
-		ResultActions resultActions =
-				mockMvc
-				.perform(
-						post("/addUser").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVO)));
-
-		resultActions
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.message", is("회원가입 성공")));
-	}
-
-	//@Test
-	public void updateUser() throws Exception {
-
-		UserVO userVO = new UserVO();
-
-		userVO.setUserId("test14 update2");
-		userVO.setUnitNo("test12");
-		userVO.setName("test12");
-		userVO.setPwd("test12");
-		userVO.setPhoneNum(123);
-		userVO.setEmail("test12");
-		userVO.setAddr("test12");
-		userVO.setRoll(1);
-		userVO.setHeadHouse(1);
-		userVO.setUseFlag("12");
-		userVO.setSsn("1232");
-
-		ResultActions resultActions =
-				mockMvc
-				.perform(
-						post("/updateUser").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVO)));
-
-		resultActions
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.message", is("회원수정 성공")));
-
-	}
-
 	@Test
-	public void deleteUser() throws Exception {
-
-		UserVO userVO = new UserVO();
-
-		userVO.setUserId("test14 update2");
-
-		ResultActions resultActions =
+	public void getAuthUser() throws Exception {
+	    UserVO authUser = new UserVO();
+	    authUser.setUserId("skok1025");
+		
+		ResultActions resultActions = 
 				mockMvc
 				.perform(
-						post("/updateUser").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userVO)));
-
+						post("/api/user/auth").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(authUser)));
+		
 		resultActions
+		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.message", is("회원수정 성공")));
-
+		.andExpect(jsonPath("$.message", is("로그인 성공")));
 	}
+
 
 }
