@@ -75,7 +75,7 @@ public class StudyRoomController {
 			return studyRoomService.addStudyRoom(seat, user);
 
 		} catch (Exception e) {
-			errMsg += "오류발생";
+			errMsg += "오류발생.";
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
 		}
 
