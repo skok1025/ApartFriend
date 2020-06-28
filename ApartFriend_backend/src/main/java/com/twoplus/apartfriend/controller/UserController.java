@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
  * @author pkj
  *
  */
-@RestController
+//@RestController
 @RequestMapping("/api/user")
 public class UserController {
 
@@ -32,6 +32,8 @@ public class UserController {
 	
 	String errMsg = "";
 	int result = 0;
+	
+
 	
 	//모든 유저정보 geta
 	@ApiOperation(value="모든 유저정보 리스트")

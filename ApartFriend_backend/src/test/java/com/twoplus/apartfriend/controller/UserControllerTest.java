@@ -65,8 +65,8 @@ public class UserControllerTest {
 		userVO.setName("test12");
 		userVO.setPwd("test12");
 		userVO.setPhoneNum(123);
-		userVO.setCEmail("test12");
-		userVO.setCAddr("test12");
+		userVO.setEmail("test12");
+		userVO.setAddr("test12");
 		userVO.setRoll(1);
 		userVO.setHeadHouse(1);
 		userVO.setUseFlag("12");
@@ -93,8 +93,8 @@ public class UserControllerTest {
 		userVO.setName("test12");
 		userVO.setPwd("test12");
 		userVO.setPhoneNum(123);
-		userVO.setCEmail("test12");
-		userVO.setCAddr("test12");
+		userVO.setEmail("test12");
+		userVO.setAddr("test12");
 		userVO.setRoll(1);
 		userVO.setHeadHouse(1);
 		userVO.setUseFlag("12");

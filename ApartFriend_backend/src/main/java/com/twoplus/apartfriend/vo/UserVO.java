@@ -19,8 +19,8 @@ public class UserVO {
 	private String gender;
 	private Integer phoneNum;
 	private String regDate;
-	private String cEmail;
-	private String cAddr;
+	private String email;
+	private String addr;
 	private Integer roll;
 	private Integer headHouse;
 	private String useFlag;

@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
  *	독서실  controller
  *
  */
-@Controller
+//@Controller
 @RequestMapping("/api/studyRoom")
 public class StudyRoomController {
 
