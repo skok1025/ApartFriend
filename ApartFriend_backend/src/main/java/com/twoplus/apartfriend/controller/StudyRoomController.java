@@ -10,9 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.twoplus.apartfriend.dto.JSONResult;
+import com.twoplus.apartfriend.dto.UserSeat;
 import com.twoplus.apartfriend.service.StudyRoomService;
 import com.twoplus.apartfriend.vo.SeatVO;
 import com.twoplus.apartfriend.vo.StudyRoomVO;
@@ -26,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
  *	독서실  controller
  *
  */
-//@Controller
+@Controller
 @RequestMapping("/api/studyRoom")
 public class StudyRoomController {
 
@@ -62,10 +67,19 @@ public class StudyRoomController {
 	 */
 	@ApiOperation(value="독서실 신청 API")
 	@PostMapping("/applyStudyRoom")
-	public ResponseEntity<JSONResult> applyStudyRoom(HttpSession session,SeatVO seat) throws Exception {
+	public ResponseEntity<JSONResult> applyStudyRoom(@RequestBody UserSeat userSeat) throws Exception {
+
+		System.out.println("userSeat check :: " + userSeat);
+
+		UserVO user = new UserVO();
+		user.setUserId(userSeat.getUserId());
+
+		SeatVO seat = new SeatVO();
+		seat.setSeatNo(userSeat.getSeatNo());
+
 
 		try {
-			UserVO user = (UserVO) session.getAttribute("userId");
+			//			UserVO user = (UserVO) session.getAttribute("userId");
 
 			int result = studyRoomService.addStudyRoom(seat, user);
 			if(result == 2) {
