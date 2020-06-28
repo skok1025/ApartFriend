@@ -29,7 +29,6 @@ public class StudyRoomService {
 	@Autowired
 	seatMapper seatMapper;
 
-	public int result;
 	public String errMsg;
 
 	//이용가능 check
@@ -60,72 +59,46 @@ public class StudyRoomService {
 		return result;
 	}
 
-	//독서실 신청 ( 메세지 큐 , 디스패쳐 , 메세지 브로커 , 스프링스케쥴러 , cron  공부해서 적용시켜야함.)
-	public ResponseEntity<JSONResult> addStudyRoom(SeatVO seat, UserVO user) throws Exception {
+	public int addStudyRoom(SeatVO seat, UserVO user) throws Exception {
 
 		StudyRoomVO studyRoom = null;
+		int result = 0;
 
-		try {
-			//이용가능한지 check
-			studyRoom = registryCheck(user);
+		//이용가능한지 check
+		studyRoom = registryCheck(user);
 
-			//오늘 일 수랑 db일 수 비교
-			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-mm-dd");
-			int dbDay = dataFormat.parse(studyRoom.getApplyDate()).getDate();	
-			int curDay = new Date().getDay();
+		//오늘 일 수랑 db일 수 비교
+		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-mm-dd");
+		int dbDay = dataFormat.parse(studyRoom.getApplyDate()).getDate();	
+		int curDay = new Date().getDay();
 
-			if(studyRoom.getUseCount() >= 3 && dbDay == curDay ) {
-				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("하루 이용 횟수 초과"));
-			}
-
-			//등록과 함께 좌석상태를 바꾸기 위한 신청상태코드를 가져옴
-			studyRoom.setApplyStatus(1);
-			int applyStatus = insertStudyRoom(studyRoom); 
-			studyRoom.setApplyStatus(applyStatus);
-
-			//등록되면 좌석상태 변경
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("studyRoom", studyRoom);
-			map.put("seat", seat); //pk를 화면단에서부터 받아야함. 
-
-			result = updateSeat(map);
-
-			if(result == 0) {
-				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 등록 실패"));
-			}
-
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("독서실 등록 성공", result));
-
-		} catch (Exception e) {//통신실패
-			errMsg += "오류발생";
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
+		if(studyRoom.getUseCount() >= 3 && dbDay == curDay ) {
+			return result;
 		}
+
+		//등록과 함께 좌석상태를 바꾸기 위한 신청상태코드를 가져옴
+		studyRoom.setApplyStatus(1);
+		int applyStatus = insertStudyRoom(studyRoom); 
+		studyRoom.setApplyStatus(applyStatus);
+
+		//등록되면 좌석상태 변경
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("studyRoom", studyRoom);
+		map.put("seat", seat); //pk를 화면단에서부터 받아야함. 
+
+		return result = updateSeat(map);
 	}
 
 	//이용시간 만료되거나 이용취소 시 
-	public ResponseEntity<JSONResult> endReadingRoom(HttpSession session, StudyRoomVO studyRoom, SeatVO seat) throws Exception {
+	public int endReadingRoom(HttpSession session, StudyRoomVO studyRoom, SeatVO seat) throws Exception {
+		
+		int result = updateStudyRoom(studyRoom);
 
-		try {
-			UserVO user = (UserVO) session.getAttribute("userId");
-			studyRoom.setUserId(user.getUserId());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("studyRoom", studyRoom); //pk를 화면단에서부터 받아야함.
+		map.put("seat", seat); //pk를 화면단에서부터 받아야함. 
 
-			result = updateStudyRoom(studyRoom);
+		return	result = updateSeat(map);
 
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("studyRoom", studyRoom); //pk를 화면단에서부터 받아야함.
-			map.put("seat", seat); //pk를 화면단에서부터 받아야함. 
-
-			result = updateSeat(map);
-
-			if(result == 0) {
-				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 이용 취소 실패"));
-			}
-
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("독서실 이용 취소 성공", result));
-
-		} catch (Exception e) {
-			errMsg += "오류발생";
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
-		}
 	}
 }

@@ -30,7 +30,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/studyRoom")
 public class StudyRoomController {
 
-
 	String errMsg = "";
 
 	@Autowired
@@ -49,17 +48,13 @@ public class StudyRoomController {
 
 			List<StudyRoomVO> result = studyRoomService.getInfoStudyRoom(user);
 
-			if(result == null) {
-				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("이용정보 조회 실패"));
-			}
-
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("이용정보 조회 성공", result));
+			return result != null ? ResponseEntity.status(HttpStatus.CREATED).body(JSONResult.success("이용정보 조회 성공", result))
+					: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("이용정보 조회 실패"));
 
 		} catch (Exception e) {
 			errMsg += "오류발생";
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
 		}
-
 	}
 
 	/**
@@ -72,7 +67,10 @@ public class StudyRoomController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("userId");
 
-			return studyRoomService.addStudyRoom(seat, user);
+			int result = studyRoomService.addStudyRoom(seat, user);
+
+			return result == 1 ? ResponseEntity.status(HttpStatus.CREATED).body(JSONResult.success("독서실 등록 성공", result))
+					: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 등록 실패"));
 
 		} catch (Exception e) {
 			errMsg += "오류발생.";
@@ -88,7 +86,19 @@ public class StudyRoomController {
 	@GetMapping("/endStudyRoom")
 	public ResponseEntity<JSONResult> endStudyRoom(HttpSession session, StudyRoomVO studyRoom, SeatVO seat) throws Exception {
 
-		return studyRoomService.endReadingRoom(session, studyRoom, seat);
+		try {
 
+			UserVO user = (UserVO) session.getAttribute("userId");
+			studyRoom.setUserId(user.getUserId());
+
+			int result = studyRoomService.endReadingRoom(session, studyRoom, seat);
+
+			return result == 1 ? ResponseEntity.status(HttpStatus.CREATED).body(JSONResult.success("독서실 이용시간 만료 성공", result))
+					: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 이용시간 만료 실패"));
+
+		} catch (Exception e) {
+			errMsg += "오류발생.";
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
+		}
 	}
 }
