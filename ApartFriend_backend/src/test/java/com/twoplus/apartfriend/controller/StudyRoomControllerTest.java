@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
+import com.twoplus.apartfriend.dto.UserSeat;
 import com.twoplus.apartfriend.vo.SeatVO;
 import com.twoplus.apartfriend.vo.StudyRoomVO;
 import com.twoplus.apartfriend.vo.UserVO;
@@ -56,7 +57,7 @@ public class StudyRoomControllerTest {
 
 		ResultActions resultActions =
 				mockMvc.perform(
-						post("/api/studyRoom/getInfoStudyRoom").content(new Gson().toJson(user)));
+						post("/api/studyRoom/getInfoStudyRoom").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(user)));
 
 		resultActions
 		.andExpect(status().isOk())
@@ -77,7 +78,7 @@ public class StudyRoomControllerTest {
 
 		ResultActions resultActions =
 				mockMvc.perform(
-						post("/api/studyRoom/getInfoStudyRoom").content(new Gson().toJson(user)));
+						post("/api/studyRoom/getInfoStudyRoom").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(user)));
 
 		resultActions
 		.andExpect(status().isOk())
@@ -90,18 +91,16 @@ public class StudyRoomControllerTest {
 	 * 좌석 이용 (등록)
 	 * @throws Exception 객체 2개를 넘겨야 하는데 / 컨트롤러에서는 map으로 넘겨받는것이 아닌데
 	 */
-	//@Test 
+	@Test 
 	public void applyStudyRoom() throws Exception {
 
-		UserVO user = new UserVO();
-		user.setUserId("test13");
-
-		SeatVO seat = new SeatVO();
-		seat.setSeatNo(1);
+		UserSeat userSeat = new UserSeat();
+		userSeat.setUserId("test01");
+		userSeat.setSeatNo(1);
 
 		ResultActions resultActions =
 				mockMvc.perform(
-						post("/api/studyRoom/applyStudyRoom").content(new Gson().toJson(user)));
+						post("/api/studyRoom/applyStudyRoom").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userSeat)));
 
 		resultActions
 		.andExpect(status().isOk())
@@ -128,7 +127,7 @@ public class StudyRoomControllerTest {
 
 		ResultActions resultActions =
 				mockMvc.perform(
-						post("/api/studyRoom/endStudyRoom").content(new Gson().toJson(user)));
+						post("/api/studyRoom/endStudyRoom").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(user)));
 
 		resultActions
 		.andExpect(status().isOk())
