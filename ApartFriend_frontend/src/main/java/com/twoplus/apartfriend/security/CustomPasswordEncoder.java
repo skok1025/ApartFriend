@@ -25,12 +25,12 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
-		return sb.toString();
+		return sb.toString().substring(0,80);
 	}
 
 	@Override
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
-		return encodedPassword.equals(encode(rawPassword.toString()));
+		
+		return encodedPassword.equals(UserDetailsServiceImpl.NOOP + encode(rawPassword.toString()));
 	}
 }

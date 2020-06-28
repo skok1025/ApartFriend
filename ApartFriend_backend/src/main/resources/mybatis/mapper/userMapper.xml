@@ -20,12 +20,13 @@
  		<result property="ssn"       column="C_SSN"           jdbcType="VARCHAR" /> 
 	</resultMap>
 	
-	<select id="selectAuthUser" resultType="com.twoplus.apartfriend.vo.UserVO">
+	<select id="selectAuthUser" parameterType="user" resultType="user">
 	<![CDATA[
 	SELECT 
         user_id as userId,
         unit_no as unitNo,
         cast(AES_DECRYPT(c_name, 'CAFE24') as char(200)) as name,
+        c_pwd as pwd,
         gender,
         cast(AES_DECRYPT(c_phone_num, 'CAFE24') as char(200)) as phoneNum,
         cast(AES_DECRYPT(c_email, 'CAFE24') as char(200)) as email,
@@ -33,9 +34,8 @@
         roll,
         head_house as headHouse,
         use_flag as useFlag
-        
-    FROM apartfriend.t_user
-    WHERE user_id = 'skok1025';
+    FROM t_user
+    WHERE user_id = #{userId};
 	]]>
 	</select>
 	

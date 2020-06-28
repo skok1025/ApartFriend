@@ -99,6 +99,7 @@ all permitted
 			// All Permit
 			//.antMatchers("/**").permitAll()
 			.anyRequest().permitAll();
+		
 			
 			//
 			// 2. CSRF 설정
@@ -143,7 +144,7 @@ all permitted
 			//
 			.and()
 			.rememberMe()
-			.key("mysite3")
+			.key("apartfriend")
 			.rememberMeParameter("remember-me");
 		
 		

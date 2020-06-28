@@ -52,7 +52,7 @@ public class UserControllerTest {
 				mockMvc
 				.perform(
 						post("/api/user/auth").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(authUser)));
-		
+		System.out.println(resultActions);
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk())

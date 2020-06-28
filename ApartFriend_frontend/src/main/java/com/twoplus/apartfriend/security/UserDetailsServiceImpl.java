@@ -8,22 +8,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.twoplus.apartfriend.provider.CustomerProvider;
 import com.twoplus.apartfriend.vo.UserVO;
 
 
-@Component
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	private CustomerProvider customerProvider;
 	
+	public static String NOOP = "{noop}";
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		UserVO memberVo = customerProvider.getAuth(username);
-//		SecurityUser securityUser = new SecurityUser();
-//		
+		UserVO userVo = customerProvider.getAuth(username);
+		SecurityUser securityUser = new SecurityUser();
+		if (userVo != null) {
+			securityUser.setId(userVo.getUserId());
+			securityUser.setName(userVo.getName());
+			
+			securityUser.setUsername(userVo.getUserId());
+			securityUser.setPassword(NOOP + userVo.getPwd());
+			String role = "ROLE_USER";
+			securityUser.setAuthorities(Arrays.asList(new SimpleGrantedAuthority(role)));
+		}
+		//		
 //		if( memberVo != null ) {
 //			// mock data
 //			//String role = userVo.getRole();
@@ -71,12 +83,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //			}
 //		}
 		
-		//UserVO securityUser = new UserVO();
-		SecurityUser securityUser = new SecurityUser();
-		securityUser.setId("skok1025");
-		securityUser.setName("my name");
-		
-		//return new User();
 		return securityUser;
 	}
 }
