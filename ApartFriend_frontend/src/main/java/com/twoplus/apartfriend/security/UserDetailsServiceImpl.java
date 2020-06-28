@@ -74,7 +74,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		//UserVO securityUser = new UserVO();
 		SecurityUser securityUser = new SecurityUser();
 		securityUser.setId("skok1025");
-		securityUser.setId("addr");
+		securityUser.setName("my name");
 		
 		//return new User();
 		return securityUser;

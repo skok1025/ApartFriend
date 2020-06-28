@@ -14,84 +14,73 @@ public class SecurityUser implements UserDetails{
    private String password;// credential
    
    //domain fields(principal, 보호할 사용자 중요 데이터)
-   private Long no;
-   private String name; // 성명 domain data
-   private String birthDate;
-   private String gender;
    private String id;
-   private String email;
-   private String tel;
-   private String regdate;
+   private String unitNo;
+	private String name;
+	private String gender;
+	private String phoneNum;
+	private String email;
+	private String addr;
+	private String useFlag;
    
-   
-   private String basketCode; // 비회원일때 장바구니 코드
-   
-   
-   public String getBasketCode() {
-	return basketCode;
-}
 
-public void setBasketCode(String basketCode) {
-	this.basketCode = basketCode;
-}
+   public String getId() {
+		return id;
+	}
 
-public String getBirthDate() {
-	return birthDate;
-}
+	public void setId(String id) {
+		this.id = id;
+	}
 
-public void setBirthDate(String birthDate) {
-	this.birthDate = birthDate;
-}
+public String getUnitNo() {
+		return unitNo;
+	}
 
-public String getGender() {
-	return gender;
-}
+	public void setUnitNo(String unitNo) {
+		this.unitNo = unitNo;
+	}
 
-public void setGender(String gender) {
-	this.gender = gender;
-}
+	public String getGender() {
+		return gender;
+	}
 
-public String getId() {
-	return id;
-}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-public void setId(String id) {
-	this.id = id;
-}
+	public String getPhoneNum() {
+		return phoneNum;
+	}
 
-public String getEmail() {
-	return email;
-}
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
 
-public void setEmail(String email) {
-	this.email = email;
-}
+	public String getEmail() {
+		return email;
+	}
 
-public String getTel() {
-	return tel;
-}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-public void setTel(String tel) {
-	this.tel = tel;
-}
+	public String getAddr() {
+		return addr;
+	}
 
-public String getRegdate() {
-	return regdate;
-}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 
-public void setRegdate(String regdate) {
-	this.regdate = regdate;
-}
+	public String getUseFlag() {
+		return useFlag;
+	}
 
-public Long getNo() {
-      return no;
-   }
+	public void setUseFlag(String useFlag) {
+		this.useFlag = useFlag;
+	}
 
-   public void setNo(Long no) {
-      this.no = no;
-   }
-
-   public String getName() {
+public String getName() {
       return name;
    }
 
