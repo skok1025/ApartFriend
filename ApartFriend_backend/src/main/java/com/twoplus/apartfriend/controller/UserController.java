@@ -71,11 +71,10 @@ public class UserController {
 	//회원정보 수정
 	@PostMapping("/updateUser")
 	public ResponseEntity<JSONResult> updateUser(@RequestBody UserVO userVO) throws Exception {
-		System.out.println("userVO check1 ::: " + userVO);
+
 		try {
 			result = userService.updateUser(userVO);
-			System.out.println("result check ::: " + result);
-			System.out.println("userVO check2 ::: " + userVO);
+
 		} catch (Exception e) {
 			errMsg = "오류발생";
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(errMsg));
@@ -94,8 +93,4 @@ public class UserController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("회원삭제 성공", result));
 	}
-	
-	
-	
-
 }

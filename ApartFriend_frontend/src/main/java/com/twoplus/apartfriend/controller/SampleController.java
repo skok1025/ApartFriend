@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.twoplus.apartfriend.service.SampleService;
 
@@ -24,5 +25,11 @@ public class SampleController {
 	@GetMapping("/template")
 	public String template() {
 		return "template";
+	}
+	
+	@GetMapping("/thymeleaf")
+	public String test() {
+		System.out.println("check ::: ");
+		return "/templates/test.html";
 	}
 }
