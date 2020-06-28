@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.twoplus.apartfriend.vo.VoteVO;
 import com.twoplus.apartfriend.vo.VoteValueVO;
 
-@Repository
+//@Repository
 public class VoteDao {
 	
 	@Autowired

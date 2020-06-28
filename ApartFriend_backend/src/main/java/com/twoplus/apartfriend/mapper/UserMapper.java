@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.twoplus.apartfriend.vo.UserVO;
 
-//@Mapper
+@Mapper
 public interface UserMapper {
 
 	//모든 유저정보 get

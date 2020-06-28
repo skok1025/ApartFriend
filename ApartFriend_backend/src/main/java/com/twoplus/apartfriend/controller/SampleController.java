@@ -20,8 +20,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 
-@Controller
-@RequestMapping("/api/test")
+
+//@RestController("AdminAPIController")
+//@RequestMapping("/api/test")
 public class SampleController {
 
 	@Autowired
