@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.twoplus.apartfriend.mapper.studyRoomMapper">
+
+	<resultMap id="studyRoom"             type="studyRoom">
+		<result property="studyRoomNo"    column="STUDY_ROOM_NO"   jdbcType="VARCHAR" />
+		<result property="seatNo"         column="SEAT_NO"         jdbcType="VARCHAR" />
+		<result property="applyDate"      column="APPLY_DATE"      jdbcType="VARCHAR" />
+		<result property="applyStatus"    column="APPLY_STATUS"    jdbcType="VARCHAR" />
+		<result property="applyName"      column="APPLY_NAME"      jdbcType="VARCHAR" />
+		<result property="startTime"      column="START_TIME"      jdbcType="VARCHAR" />
+		<result property="endTime"        column="END_TIME"        jdbcType="VARCHAR" />
+		<result property="useCount"       column="USE_COUNT"       jdbcType="VARCHAR" />
+		<result property="userId"         column="USER_ID"         jdbcType="VARCHAR" />		
+	</resultMap>
+
+<!-- 	관리자 or 회원이 독서실 이용정보 조회 -->
+	<select id="getInfoStudyRoom" resultType="studyRoom" parameterType="user">
+		<![CDATA[
+			SELECT 
+				 study_room_no
+				,seat_no
+				,apply_date
+				,apply_status
+				,apply_name
+				,start_time
+				,end_time
+				,use_count
+				,user_id
+			FROM apartfriend.t_study_room
+		<if test="roll == '0' ">
+			WHERE userId = #{userId}
+		</if>
+		]]>
+	</select>
+
+<!-- 	신청가능한지 조회 -->
+	<select id="registryCheck" parameterType="user" resultMap="studyRoom">
+		<![CDATA[
+			SELECT use_count, apply_date, user_id
+			FROM apartfriend.t_study_room
+			WHERE user_id = #{userId} 
+			ORDER BY apply_date DESC limit 1
+		]]>
+	</select>
+<!-- 	신청등록 -->
+	<insert id="insertStudyRoom" parameterType="studyRoom" >
+		<![CDATA[
+			INSERT INTO apartfriend.t_study_room
+			VALUES (
+						,null                
+						,#{seatNo}          
+						,now()               
+						,#{applyStatus}      
+						,#{applyname}               
+						,now()               
+						,null                
+						,#{useCount} + 1       
+						,#{userId}                  
+			)
+			<selectKey resultType="int" keyProperty="applyStatus" order="AFTER" >
+				SELECT apply_status
+				FROM apartfriend.t_study_room
+				ORDER BY apply_date DESC limit 1
+			</selectKey>
+		]]>
+	</insert>
+
+<!-- 	좌석 이용시간 종료 시, 자동 만료 시    ->    updateSeat 수행       -->
+	<update id="updateStudyRoom" parameterType="studyRoom" >
+		<![CDATA[
+			UPDATE apartfriend.t_study_room
+			SET end_time = now()
+						   ,apply_status = apply_status + 1
+			WHERE study_room_no = #{studyRoomNo} AND user_id = #{userId}
+		]]>
+	</update>
+
+</mapper>

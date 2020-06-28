@@ -27,6 +27,11 @@ public class SampleController {
 		return "template";
 	}
 	
+	@GetMapping("/template1")
+	public String template1() {
+		return "template1";
+	}
+	
 	@GetMapping("/thymeleaf")
 	public String test() {
 		System.out.println("check ::: ");
