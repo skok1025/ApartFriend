@@ -62,7 +62,7 @@ public class StudyRoomService {
 	public int addStudyRoom(SeatVO seat, UserVO user) throws Exception {
 
 		StudyRoomVO studyRoom = null;
-		int result = 0;
+		int result = 2;
 
 		//이용가능한지 check
 		studyRoom = registryCheck(user);
@@ -93,7 +93,11 @@ public class StudyRoomService {
 	public int endReadingRoom(HttpSession session, StudyRoomVO studyRoom, SeatVO seat) throws Exception {
 		
 		int result = updateStudyRoom(studyRoom);
-
+		
+		if(result == 0) {
+			return result;
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("studyRoom", studyRoom); //pk를 화면단에서부터 받아야함.
 		map.put("seat", seat); //pk를 화면단에서부터 받아야함. 

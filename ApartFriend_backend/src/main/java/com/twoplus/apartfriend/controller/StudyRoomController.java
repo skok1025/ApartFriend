@@ -68,12 +68,15 @@ public class StudyRoomController {
 			UserVO user = (UserVO) session.getAttribute("userId");
 
 			int result = studyRoomService.addStudyRoom(seat, user);
+			if(result == 2) {
+				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("하루이용 횟수 초과", result));
+			}
 
 			return result == 1 ? ResponseEntity.status(HttpStatus.CREATED).body(JSONResult.success("독서실 등록 성공", result))
 					: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 등록 실패"));
 
 		} catch (Exception e) {
-			errMsg += "오류발생.";
+			errMsg += "오류발생";
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
 		}
 
@@ -97,7 +100,7 @@ public class StudyRoomController {
 					: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 이용시간 만료 실패"));
 
 		} catch (Exception e) {
-			errMsg += "오류발생.";
+			errMsg += "오류발생";
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(errMsg));
 		}
 	}
