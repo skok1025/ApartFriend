@@ -19,6 +19,6 @@ public class MainController {
 	@GetMapping("/index")
 	@ResponseBody
 	public String index(@AuthenticationPrincipal SecurityUser user) {
-		return user.getName();
+		return user.toString();
 	}
 }
