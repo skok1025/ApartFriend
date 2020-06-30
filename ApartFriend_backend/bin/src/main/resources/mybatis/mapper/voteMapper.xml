@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.twoplus.apartfriend.mapper.VoteMapper">
+
+	<insert id="addVote" parameterType="voteVo">
+	    <![CDATA[
+	        INSERT INTO
+	            t_vote(no, title, start_timestamp, end_timestamp, ins_timestamp, upd_timestamp, del_timestamp, user_id)
+	            VALUES (null, #{title}, #{start_timestamp}, #{end_timestamp}, now(), #{upd_timestamp}, #{del_timestamp}, #{user_id})
+	    ]]>
+
+		<selectKey keyProperty="no" resultType="integer" order="AFTER">
+           <![CDATA[
+              select last_insert_id()      
+           ]]>
+		</selectKey>
+	</insert>
+
+	<insert id="addVoteValue" parameterType="voteValueVo">
+	    <![CDATA[
+	        INSERT INTO 
+	            t_vote_value(no, vote_no, option, option_count)
+	            VALUES (null, #{vote_no}, #{option}, #{option_count})
+	    ]]>
+	</insert>
+
+	<select id="getVoteList" parameterType="long"
+		resultType="voteVo">
+		<![CDATA[
+		    SELECT 
+		    	no,
+		    	title,
+		    	start_timestamp,
+		    	end_timestamp,
+		    	ins_timestamp,
+		    	upd_timestamp,
+		    	del_timestamp,
+		    	user_id
+		    FROM t_vote
+			ORDER BY no DESC
+			LIMIT 10 OFFSET #{startCol}
+		]]>
+	</select>
+	
+	<update id="updateVote" parameterType="voteVo">
+	    <![CDATA[
+	        UPDATE
+	            t_vote
+	            SET title = #{title}, start_timestamp = #{start_timestamp}, end_timestamp = #{end_timestamp} 
+	        WHERE no = #{no}
+	    ]]>
+	</update>
+	
+	<update id="deleteVote" parameterType="voteVo">
+	    <![CDATA[
+	        UPDATE
+	            t_vote
+	            SET del_timestamp = #{del_timestamp}
+	        WHERE no = #{no} AND user_id = #{user_id}
+	    ]]>
+	</update>
+
+
+</mapper>

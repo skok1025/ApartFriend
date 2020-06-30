@@ -98,6 +98,7 @@ all permitted
 			//.antMatchers("/admin/**").hasRole("ADMIN")
 			// All Permit
 			//.antMatchers("/**").permitAll()
+		    .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll();
 		
 			
