@@ -5,7 +5,7 @@
 
 	<select id="selectTest" resultType="string">
 	<![CDATA[
-		select test from t_test limit 1 offset 0
+		select * from t_test 
 	]]>
 	</select>
 	

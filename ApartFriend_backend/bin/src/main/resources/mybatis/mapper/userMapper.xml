@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.twoplus.apartfriend.mapper.UserMapper">
+
+	<resultMap id="userSelectMap"                  type="user">
+		<result property="userId"    column="USER_ID"       jdbcType="VARCHAR" />
+		<result property="unitNo"    column="UNIT_NO"       jdbcType="VARCHAR" />
+		<result property="name"      column="C_NAME"          jdbcType="VARCHAR" />
+		<result property="pwd"       column="C_PWD"           jdbcType="VARCHAR" />
+		<result property="gender"    column="GENDER"        jdbcType="VARCHAR" />
+		<result property="phoneNum"  column="C_PHONE_NUM"     jdbcType="INTEGER" />
+		<result property="regDate"   column="REG_DATE"      jdbcType="VARCHAR" />
+		<result property="email"    column="C_EMAIL"       jdbcType="VARCHAR" />
+		<result property="addr"     column="C_ADDR"        jdbcType="VARCHAR" />
+		<result property="roll"      column="ROLL"          jdbcType="INTEGER" />
+		<result property="headHouse" column="HEAD_HOUSE"    jdbcType="INTEGER" />
+		<result property="useFlag"   column="USE_FLAG"      jdbcType="VARCHAR" />
+ 		<result property="ssn"       column="C_SSN"           jdbcType="VARCHAR" /> 
+	</resultMap>
+	
+	<select id="selectAuthUser" parameterType="user" resultType="user">
+	<![CDATA[
+	SELECT 
+        user_id as userId,
+        unit_no as unitNo,
+        cast(AES_DECRYPT(c_name, 'CAFE24') as char(200)) as name,
+        c_pwd as pwd,
+        gender,
+        cast(AES_DECRYPT(c_phone_num, 'CAFE24') as char(200)) as phoneNum,
+        cast(AES_DECRYPT(c_email, 'CAFE24') as char(200)) as email,
+        cast(AES_DECRYPT(c_addr, 'CAFE24') as char(200)) as addr,
+        roll,
+        head_house as headHouse,
+        use_flag as useFlag
+    FROM t_user
+    WHERE user_id = #{userId};
+	]]>
+	</select>
+	
+	
+</mapper>
