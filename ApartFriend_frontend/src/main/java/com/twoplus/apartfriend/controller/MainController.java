@@ -41,9 +41,7 @@ public class MainController {
 		} else {
 			// naver email 이 t_user 테이블 상에 id 로 존재하는 경우			
 		}
-
-		
-		
+	
 		return naverprofile.toString();
 	}
 
