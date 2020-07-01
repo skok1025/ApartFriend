@@ -5,6 +5,9 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.ToString;
+
+@ToString
 public class SecurityUser implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
