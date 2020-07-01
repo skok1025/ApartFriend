@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.twoplus.apartfriend.dto.NaverLoginTokenDTO;
+import com.twoplus.apartfriend.dto.NaverProfileDTO;
 import com.twoplus.apartfriend.security.SecurityUser;
 import com.twoplus.apartfriend.util.NaverLoginUtil;
 
@@ -23,13 +26,25 @@ public class MainController {
 	}
 
 	@GetMapping("/naverlogin/callback")
-	@ResponseBody
-	public String naverCallback(String code, String state) {
-		String response = NaverLoginUtil.getResponse(code, state, "http://localhost:8081/naverlogin/callback");
+	//@ResponseBody
+	public String naverCallback(String code, String state, Model model) {
+		NaverLoginTokenDTO response = NaverLoginUtil.getResponse(code, state, "http://localhost:8081/naverlogin/callback");
+		
+		// 프로필 가져오기
+		NaverProfileDTO naverprofile= NaverLoginUtil.getProfile(response);
+		
+		boolean isFirstTimeAccess = true;
+		
+		if (isFirstTimeAccess == true) {
+			model.addAttribute("naverprofile", naverprofile);
+			return "index/first_naver";
+		} else {
+			// naver email 이 t_user 테이블 상에 id 로 존재하는 경우			
+		}
 
-		//JSONObject jObject = new JSONObject(response);
-	    //String access_token = jObject.getString("title");
-		return response;
+		
+		
+		return naverprofile.toString();
 	}
 
 	@GetMapping("/index")
