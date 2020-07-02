@@ -12,11 +12,13 @@ import com.twoplus.apartfriend.dto.LogType;
 
 public class libLog {
 	public String basePath = "D:/apartfriend/";
-	private static libLog libLog = new libLog();
+	private static libLog instance = new libLog();
 	private Gson gson = new Gson();
 	
+	private libLog() {}
+	
 	public static libLog getInstance() {
-		return libLog;
+		return instance;
 	}
 	
 	public boolean write(String logKey, String logData) {
