@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,11 +61,11 @@ public class VoteControllerTest {
 	 */
 	@Test
 	public void voteAdd() throws Exception {
-		VoteVO vo = new VoteVO();
-		vo.setTitle("test title");
-		vo.setUser_id("skok1025");
-		vo.setStart_timestamp("2020-06-21");
-		vo.setEnd_timestamp("2020-06-25");
+//		VoteVO vo = new VoteVO();
+//		vo.setTitle("test title");
+//		vo.setUser_id("skok1025");
+//		vo.setStart_timestamp("2020-06-21");
+//		vo.setEnd_timestamp("2020-06-25");
 		
 		VoteValueVO valueVo1 = new VoteValueVO();
 		valueVo1.setOption("option name");
@@ -72,7 +73,15 @@ public class VoteControllerTest {
 		
 		List<VoteValueVO> voteValueList = new ArrayList<VoteValueVO>();
 		voteValueList.add(valueVo1);
-		vo.setVotevalueList(voteValueList);
+		//vo.setVotevalueList(voteValueList);
+		
+		// build pattern
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+		VoteVO.Builder builder = new VoteVO
+				.Builder("test title", "2020-06-21", "2020-06-25", "skok1025", voteValueList)
+				.setInsTimestamp(format1.format (System.currentTimeMillis()));
+		VoteVO vo = builder.build();
+		
 		
 		ResultActions resultActions = 
 				mockMvc
