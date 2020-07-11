@@ -28,9 +28,12 @@
 			</div>
 
 			<!-- Login Form -->
-			<form action="${pageContext.servletContext.contextPath}/auth"
+			<form action="${pageContext.servletContext.contextPath}/naverjoin"
 				method="post">
-				<input type="text" id="unitNo" class="fadeIn second" name="unitNo"
+				<input type="hidden" name="email" value="${naverprofile.email }">
+				<input type="hidden" name="name" value="${naverprofile.name }">
+				<input type="hidden" name="gender" value="${naverprofile.gender }">
+				<input type="text" id="unitNo" name="unitNo" class="fadeIn second" name="unitNo"
 					placeholder='동-호수 (예시:"110-1502")'>  
 					<input type="submit"
 					class="fadeIn fourth" value="come in">

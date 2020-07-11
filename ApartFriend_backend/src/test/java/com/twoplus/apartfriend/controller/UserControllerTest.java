@@ -63,18 +63,18 @@ public class UserControllerTest {
 	@Test
 	public void inserUser() throws Exception {
 		UserVO inserUser = new UserVO();
-		inserUser.setUserId("skok0630");
+		inserUser.setUserId("skok063025");
 		inserUser.setUnitNo("110-1502");
 		inserUser.setName("김석현");
-		inserUser.setPwd("1234");
+		//inserUser.setPwd("1234");
 		inserUser.setGender("M");
-		inserUser.setPhoneNum("010-6866-9202");
+		//inserUser.setPhoneNum("010-6866-9202");
 		inserUser.setEmail("skok1025@naver.com");
 		inserUser.setAddr("test addr");
-		inserUser.setRoll(1);
-		inserUser.setHeadHouse(1);
-		inserUser.setUseFlag("1");
-		inserUser.setSsn("9310214-2131242");
+		//inserUser.setRoll(1);
+		//inserUser.setHeadHouse(1);
+		//inserUser.setUseFlag("1");
+		//inserUser.setSsn("9310214-2131242");
 		
 		ResultActions resultActions = 
 				mockMvc

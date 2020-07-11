@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.twoplus.apartfriend.provider.CustomerProvider;
+import com.twoplus.apartfriend.provider.UserProvider;
 import com.twoplus.apartfriend.vo.UserVO;
 
 
@@ -18,7 +18,7 @@ import com.twoplus.apartfriend.vo.UserVO;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private CustomerProvider customerProvider;
+	private UserProvider customerProvider;
 	
 	public static String NOOP = "{noop}";
 	

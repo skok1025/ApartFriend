@@ -3,21 +3,29 @@ package com.twoplus.apartfriend.controller;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.twoplus.apartfriend.dto.NaverLoginTokenDTO;
 import com.twoplus.apartfriend.dto.NaverProfileDTO;
 import com.twoplus.apartfriend.security.SecurityUser;
+import com.twoplus.apartfriend.service.UserService;
 import com.twoplus.apartfriend.util.NaverLoginUtil;
+import com.twoplus.apartfriend.vo.UserVO;
 
 @Controller
 public class MainController {
 
+	@Autowired
+	private UserService userService;
+	
 	@GetMapping("/login")
 	public String getTest(Model model, HttpSession session) {
 		String naverLoginApiURL = NaverLoginUtil.getLoginApiUrl(session, "http://localhost:8081/naverlogin/callback");
@@ -43,6 +51,29 @@ public class MainController {
 		}
 	
 		return naverprofile.toString();
+	}
+	
+	@PostMapping("/naverjoin")
+	@ResponseBody
+	public String join(UserVO userVo/*, @AuthenticationPrincipal SecurityUser user*/) {
+		userVo.setUserId(userVo.getEmail());
+		Integer result = userService.inserUser(userVo);
+		
+		return result.toString();
+		/*
+	
+		int result = userService.inserUser(userVo);
+		System.out.println(result);
+		if (result == 1) { // 회원가입 성공
+//			user.setId(email);
+//			user.setEmail(email);
+//			user.setGender(gender);
+//			user.setUnitNo(unitNo);
+//			return user.toString();
+			return "naver join success";
+		} else { 
+			return "naver join fail";
+		}*/
 	}
 
 	@GetMapping("/index")

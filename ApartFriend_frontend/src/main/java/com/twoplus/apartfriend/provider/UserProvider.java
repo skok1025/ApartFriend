@@ -9,7 +9,7 @@ import com.twoplus.apartfriend.dto.JSONResult;
 import com.twoplus.apartfriend.vo.UserVO;
 
 @Repository
-public class CustomerProvider {
+public class UserProvider {
 	
 
 	@Autowired
@@ -25,7 +25,20 @@ public class CustomerProvider {
 		return jsonresult.getData();
 	}
 	
+	public Integer insertUser(UserVO userVo) {
+		RestTemplate restTemplate = restTemplateBuilder.build();
+		
+		JSONResultInteger jsonresult = restTemplate.postForObject("http://localhost:8080/api/user/join",userVo,
+				JSONResultInteger.class);
+		return jsonresult.getData();
+	}
+
+	
 	private static class JSONResultUser extends JSONResult<UserVO> {
 	}
+	
+	private static class JSONResultInteger extends JSONResult<Integer> {
+	}
+
 
 }
