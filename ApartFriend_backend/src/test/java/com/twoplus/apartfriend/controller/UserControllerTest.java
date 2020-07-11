@@ -59,6 +59,34 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.message", is("로그인 성공")));
 	}
+	
+	@Test
+	public void inserUser() throws Exception {
+		UserVO inserUser = new UserVO();
+		inserUser.setUserId("skok0630");
+		inserUser.setUnitNo("110-1502");
+		inserUser.setName("김석현");
+		inserUser.setPwd("1234");
+		inserUser.setGender("M");
+		inserUser.setPhoneNum("010-6866-9202");
+		inserUser.setEmail("skok1025@naver.com");
+		inserUser.setAddr("test addr");
+		inserUser.setRoll(1);
+		inserUser.setHeadHouse(1);
+		inserUser.setUseFlag("1");
+		inserUser.setSsn("9310214-2131242");
+		
+		ResultActions resultActions = 
+				mockMvc
+				.perform(
+						post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(inserUser)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.message", is("회원가입 성공")));
+	}
 
 
 }

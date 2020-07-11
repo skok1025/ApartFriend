@@ -39,5 +39,28 @@
 	]]>
 	</select>
 	
+	<insert id="insertUser" parameterType="user">
+	<![CDATA[
+	INSERT INTO t_user 
+	(user_id, unit_no, c_name, c_pwd, gender, c_phone_num, reg_date, c_email, c_addr,
+	roll, head_house, use_flag, c_ssn)
+	    VALUES 
+	    (#{userId},
+	    #{unitNo},
+	    AES_ENCRYPT(#{name},'CAFE24'),
+	    SHA2(#{pwd},512),
+	    #{gender},
+	    AES_ENCRYPT(#{phoneNum},'CAFE24'),
+	    now(),
+	    AES_ENCRYPT(#{email},'CAFE24'),
+	    AES_ENCRYPT(#{addr},'CAFE24'),
+	    #{roll},
+	    #{headHouse},
+	    #{useFlag},
+	    SHA2(#{ssn},512));
+	]]>
+	
+	</insert>
+	
 	
 </mapper>
