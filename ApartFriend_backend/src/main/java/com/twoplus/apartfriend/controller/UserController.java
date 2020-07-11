@@ -59,5 +59,25 @@ public class UserController {
 		return authUser != null ? ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("로그인 성공", authUser))
 				: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("로그인 실패"));
 	}
+	
+	@ApiOperation(value="회원가입")
+	@PostMapping("/join")
+	public ResponseEntity<JSONResult> joinUser(@RequestBody UserVO userVo) throws Exception {
+		
+		int result = userService.insertUser(userVo);
+		
+		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		Set<ConstraintViolation<UserVO>> validatorResults = validator.validateProperty(userVo, "userId");
+
+		if (!validatorResults.isEmpty()) {
+			for (ConstraintViolation<UserVO> validatorResult : validatorResults) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(JSONResult.fail(validatorResult.getMessage()));
+			}
+		}
+
+		return result == 1 ? ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("회원가입 성공", result))
+				: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("회원가입 실패"));
+	}
 
 }

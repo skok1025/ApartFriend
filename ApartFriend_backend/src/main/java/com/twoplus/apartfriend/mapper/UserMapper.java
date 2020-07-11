@@ -10,5 +10,7 @@ import com.twoplus.apartfriend.vo.UserVO;
 public interface UserMapper {
 
 	public UserVO selectAuthUser(UserVO userVo);
+
+	public int insertUser(UserVO userVo);
 	
 }

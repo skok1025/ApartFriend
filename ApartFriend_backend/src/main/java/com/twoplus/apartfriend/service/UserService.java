@@ -17,5 +17,9 @@ public class UserService {
 	public UserVO getAuthUser(UserVO userVo) {
 		return userMapper.selectAuthUser(userVo);
 	}
+
+	public int insertUser(UserVO userVo) {
+		return userMapper.insertUser(userVo);
+	}
 	
 }
