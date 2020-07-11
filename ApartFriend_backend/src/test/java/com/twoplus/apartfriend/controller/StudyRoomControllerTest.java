@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
-import com.twoplus.apartfriend.dto.UserSeat;
+import com.twoplus.apartfriend.dto.UserStudyRoomSeat;
 import com.twoplus.apartfriend.vo.SeatVO;
 import com.twoplus.apartfriend.vo.StudyRoomVO;
 import com.twoplus.apartfriend.vo.UserVO;
@@ -94,13 +94,13 @@ public class StudyRoomControllerTest {
 	@Test 
 	public void applyStudyRoom() throws Exception {
 
-		UserSeat userSeat = new UserSeat();
-		userSeat.setUserId("test01");
-		userSeat.setSeatNo(1);
+		UserStudyRoomSeat userStudyRoomSeat = new UserStudyRoomSeat();
+		userStudyRoomSeat.setUserId("test01");
+		userStudyRoomSeat.setSeatNo(1);
 
 		ResultActions resultActions =
 				mockMvc.perform(
-						post("/api/studyRoom/applyStudyRoom").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userSeat)));
+						post("/api/studyRoom/applyStudyRoom").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(userStudyRoomSeat)));
 
 		resultActions
 		.andExpect(status().isOk())

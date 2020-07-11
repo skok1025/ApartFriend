@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.twoplus.apartfriend.dto.JSONResult;
-import com.twoplus.apartfriend.dto.UserSeat;
+import com.twoplus.apartfriend.dto.UserStudyRoomSeat;
 import com.twoplus.apartfriend.service.StudyRoomService;
 import com.twoplus.apartfriend.vo.SeatVO;
 import com.twoplus.apartfriend.vo.StudyRoomVO;
@@ -67,21 +64,13 @@ public class StudyRoomController {
 	 */
 	@ApiOperation(value="독서실 신청 API")
 	@PostMapping("/applyStudyRoom")
-	public ResponseEntity<JSONResult> applyStudyRoom(@RequestBody UserSeat userSeat) throws Exception {
-
-		System.out.println("userSeat check :: " + userSeat);
-
-		UserVO user = new UserVO();
-		user.setUserId(userSeat.getUserId());
-
-		SeatVO seat = new SeatVO();
-		seat.setSeatNo(userSeat.getSeatNo());
-
+	public ResponseEntity<JSONResult> applyStudyRoom(@RequestBody UserStudyRoomSeat userStudyRoomSeat,HttpSession session) throws Exception {
 
 		try {
-			//			UserVO user = (UserVO) session.getAttribute("userId");
-
-			int result = studyRoomService.addStudyRoom(seat, user);
+			//UserVO user = (UserVO) session.getAttribute("userId");
+			
+			
+			int result = studyRoomService.addStudyRoom(userStudyRoomSeat, session);
 			if(result == 2) {
 				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("하루이용 횟수 초과", result));
 			}
@@ -101,14 +90,14 @@ public class StudyRoomController {
 	 */
 	@ApiOperation(value="독서실 이용시간 만료 API")
 	@GetMapping("/endStudyRoom")
-	public ResponseEntity<JSONResult> endStudyRoom(HttpSession session, StudyRoomVO studyRoom, SeatVO seat) throws Exception {
+	public ResponseEntity<JSONResult> endStudyRoom(HttpSession session, UserStudyRoomSeat userStudyRoomSeat) throws Exception {
 
 		try {
 
 			UserVO user = (UserVO) session.getAttribute("userId");
-			studyRoom.setUserId(user.getUserId());
+			userStudyRoomSeat.setUserId(user.getUserId());
 
-			int result = studyRoomService.endReadingRoom(session, studyRoom, seat);
+			int result = studyRoomService.endReadingRoom(session, userStudyRoomSeat);
 
 			return result == 1 ? ResponseEntity.status(HttpStatus.CREATED).body(JSONResult.success("독서실 이용시간 만료 성공", result))
 					: ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("독서실 이용시간 만료 실패"));

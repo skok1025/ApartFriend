@@ -4,14 +4,14 @@
 <mapper namespace="com.twoplus.apartfriend.mapper.StudyRoomMapper">
 
 	<resultMap id="studyRoom"             type="studyRoom">
-		<result property="studyRoomNo"    column="STUDY_ROOM_NO"   jdbcType="VARCHAR" />
-		<result property="seatNo"         column="SEAT_NO"         jdbcType="VARCHAR" />
+		<result property="studyRoomNo"    column="STUDY_ROOM_NO"   jdbcType="INTEGER" />
+		<result property="seatNo"         column="SEAT_NO"         jdbcType="INTEGER" />
 		<result property="applyDate"      column="APPLY_DATE"      jdbcType="VARCHAR" />
-		<result property="applyStatus"    column="APPLY_STATUS"    jdbcType="VARCHAR" />
+		<result property="applyStatus"    column="APPLY_STATUS"    jdbcType="INTEGER" />
 		<result property="applyName"      column="APPLY_NAME"      jdbcType="VARCHAR" />
 		<result property="startTime"      column="START_TIME"      jdbcType="VARCHAR" />
 		<result property="endTime"        column="END_TIME"        jdbcType="VARCHAR" />
-		<result property="useCount"       column="USE_COUNT"       jdbcType="VARCHAR" />
+		<result property="useCount"       column="USE_COUNT"       jdbcType="INTEGER" />
 		<result property="userId"         column="USER_ID"         jdbcType="VARCHAR" />		
 	</resultMap>
 
@@ -36,7 +36,7 @@
 	</select>
 
 <!-- 	신청가능한지 조회 -->
-	<select id="registryCheck" parameterType="user" resultMap="studyRoom">
+	<select id="registryCheck" parameterType="userStudyRoomSeat" resultMap="studyRoom">
 		<![CDATA[
 			SELECT use_count, apply_date, user_id
 			FROM apartfriend.t_study_room
@@ -53,22 +53,22 @@
 						,#{seatNo}          
 						,now()               
 						,#{applyStatus}      
-						,#{applyname}               
+						,#{applyName}               
 						,now()               
 						,null                
 						,#{useCount} + 1       
 						,#{userId}                  
 			)
-			<selectKey resultType="int" keyProperty="applyStatus" order="AFTER" >
-				SELECT apply_status
-				FROM apartfriend.t_study_room
-				ORDER BY apply_date DESC limit 1
-			</selectKey>
+<!-- 			<selectKey resultType="integer" keyProperty="applyStatus" order="AFTER" > -->
+<!-- 				SELECT apply_status -->
+<!-- 				FROM apartfriend.t_study_room -->
+<!-- 				ORDER BY apply_date DESC limit 1 -->
+<!-- 			</selectKey> -->
 		]]>
 	</insert>
 
 <!-- 	좌석 이용시간 종료 시, 자동 만료 시    ->    updateSeat 수행       -->
-	<update id="updateStudyRoom" parameterType="studyRoom" >
+	<update id="updateStudyRoom" parameterType="userStudyRoomSeat" >
 		<![CDATA[
 			UPDATE apartfriend.t_study_room
 			SET end_time = now()

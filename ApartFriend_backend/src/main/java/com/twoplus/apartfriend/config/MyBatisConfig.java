@@ -21,7 +21,7 @@ public class MyBatisConfig {
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*.xml"));
         sqlSessionFactory.setVfs(SpringBootVFS.class); 
-        sqlSessionFactory.setTypeAliasesPackage("com.twoplus.apartfriend.vo");
+        sqlSessionFactory.setTypeAliasesPackage("com.twoplus.apartfriend.vo, com.twoplus.apartfriend.dto");
         
         return sqlSessionFactory.getObject();
     }

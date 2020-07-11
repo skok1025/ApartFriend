@@ -4,17 +4,17 @@
 <mapper namespace="com.twoplus.apartfriend.mapper.seatMapper">
 
 	<resultMap id="seat"                  type="seat">
-		<result property="seatNo"         column="SEAT_NO"          jdbcType="VARCHAR" />
-		<result property="studyRoomNo"    column="STUDY_ROOM_NO"    jdbcType="VARCHAR" />
-		<result property="seatStatus"     column="SEAT_STATUS"      jdbcType="VARCHAR" />
+		<result property="seatNo"         column="SEAT_NO"          jdbcType="INTEGER" />
+		<result property="studyRoomNo"    column="STUDY_ROOM_NO"    jdbcType="INTEGER" />
+		<result property="seatStatus"     column="SEAT_STATUS"      jdbcType="INTEGER" />
 	</resultMap>
 	
 <!-- 	독서실 정보 등록, 변경되면 좌석상태 변경 -->
-	<update id="updateSeat" parameterType="map">
+	<update id="updateSeat" parameterType="userStudyRoomSeat">
 		<![CDATA[
 			UPDATE apartfriend.t_seat
-			SET seat_status = #{studyRoom.applyStatus}
-			WHERE seat_no = #{seat.seatNo}
+			SET seat_status = #{applyStatus}
+			WHERE seat_no = #{seatNo}
 		]]>
 	</update>
 	
