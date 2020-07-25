@@ -27,6 +27,11 @@ public class SampleController {
 		return "template";
 	}
 	
+	@GetMapping("/material/template")
+	public String material_template() {
+		return "material/template";
+	}
+	
 	@GetMapping("/template1")
 	public String template1() {
 		return "template1";

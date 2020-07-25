@@ -17,7 +17,7 @@ import lombok.ToString;
 public class UserVO {
 
 	@NotEmpty
-	@Pattern(regexp = "^[a-zA-Z0-9]{4,18}$")
+	@Pattern(regexp = "^[a-zA-Z0-9@]{4,24}$")
 	private String userId;
 	private String unitNo;
 	private String name;

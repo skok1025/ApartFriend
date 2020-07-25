@@ -29,6 +29,7 @@ public class MainController {
 	@GetMapping("/login")
 	public String getTest(Model model, HttpSession session) {
 		String naverLoginApiURL = NaverLoginUtil.getLoginApiUrl(session, "http://localhost:8081/naverlogin/callback");
+		naverLoginApiURL = "javascript:alert('준비중입니다.');"; // 네이버로그인 비활성화
 		model.addAttribute("naverLoginApiURL", naverLoginApiURL);
 		return "index/login";
 	}
@@ -56,6 +57,7 @@ public class MainController {
 	@PostMapping("/naverjoin")
 	@ResponseBody
 	public String join(UserVO userVo/*, @AuthenticationPrincipal SecurityUser user*/) {
+		System.out.println(userVo);
 		userVo.setUserId(userVo.getEmail());
 		Integer result = userService.inserUser(userVo);
 		

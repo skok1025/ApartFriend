@@ -15,7 +15,11 @@
 <meta name="Keywords" content="ApartFriend" />
 <meta name="Description" content="ApartFriend" />
 
-
+<link rel="apple-touch-icon" sizes="76x76" href="${pageContext.request.contextPath }/assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="${pageContext.request.contextPath }/assets/material/img/favicon.png">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link href="${pageContext.request.contextPath }/assets/css/material/material-dashboard.css?v=2.1.2" rel="stylesheet" />
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath }/assets/css/bootstrap.css"
